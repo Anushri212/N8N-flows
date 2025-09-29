@@ -1,0 +1,137 @@
+{
+  "name": "speech to text",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "767c4afe-1c60-488a-bfe2-047d5fe0b8a8",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        320,
+        256
+      ],
+      "id": "74f50071-75af-4fad-9fca-ad6374146af8",
+      "name": "Webhook",
+      "webhookId": "767c4afe-1c60-488a-bfe2-047d5fe0b8a8"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        1040,
+        256
+      ],
+      "id": "4e800d34-16f7-4ff4-9579-062f6dba706f",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "51b3d82e-6ef0-4b0b-86aa-33cf8203a24e",
+              "name": "Transcript",
+              "type": "string",
+              "value": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        816,
+        256
+      ],
+      "id": "2e3ff00b-187c-4926-8d05-6936da20d4f4",
+      "name": "Extract Transcript"
+    },
+    {
+      "parameters": {
+        "resource": "speech",
+        "operation": "speechToText",
+        "additionalOptions": {},
+        "requestOptions": {}
+      },
+      "type": "@elevenlabs/n8n-nodes-elevenlabs.elevenLabs",
+      "typeVersion": 1,
+      "position": [
+        592,
+        256
+      ],
+      "id": "8925408a-7b5b-46f2-8dc0-69d45798ca88",
+      "name": "Transcribe audio or video",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "Oe2HAUSxI1KT0Yfq",
+          "name": "ElevenLabs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio or video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Transcript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio or video": {
+      "main": [
+        [
+          {
+            "node": "Extract Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8800f3c5-4fce-42cd-adce-5a2c518b8977",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "833890e74f5ae5cafa57ff3e3ef958f36df343da4e0f027f7fbbb27645dbd662"
+  },
+  "id": "sFTIofuNxJJlHwc4",
+  "tags": [
+    {
+      "createdAt": "2025-09-01T06:10:48.450Z",
+      "updatedAt": "2025-09-01T06:10:48.450Z",
+      "id": "8ftXNL8Kdgk0by1x",
+      "name": "Anushri"
+    }
+  ]
+}
